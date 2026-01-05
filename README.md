@@ -1,0 +1,2 @@
+# -Smart-Traffic-Management-System-Using-IoT-Computer-Vision
+The Smart Traffic Management System Using IoT &amp; Computer Vision is an  web-based application developed to monitor, analyze, and predict traffic congestion in real time. This project combines Computer Vision, Machine Learning, IoT concepts, and System Design to provide a scalable and practical solution for modern smart city traffic challenges.
