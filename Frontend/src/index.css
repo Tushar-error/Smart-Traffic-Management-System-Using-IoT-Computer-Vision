@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f7;
+    --bg-tertiary: #ededf0;
+    --bg-card: #ffffff;
+    --bg-overlay: rgba(255, 255, 255, 0.85);
+
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #9a9aa0;
+    --text-inverse: #ffffff;
+
+    --border-primary: #d2d2d7;
+    --border-secondary: #e5e5ea;
+
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+
+    --success: #28cd41;
+    --warning: #ff9f0a;
+    --error: #ff3b30;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+
+    --blur-md: blur(12px);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #000000;
+    --bg-secondary: #111113;
+    --bg-tertiary: #1c1c1e;
+    --bg-card: #161617;
+    --bg-overlay: rgba(0, 0, 0, 0.75);
+
+    --text-primary: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --text-tertiary: #7d7d82;
+    --text-inverse: #000000;
+
+    --border-primary: #2c2c2e;
+    --border-secondary: #3a3a3c;
+
+    --accent: #0a84ff;
+    --accent-hover: #409cff;
+
+    --success: #32d74b;
+    --warning: #ffd60a;
+    --error: #ff453a;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.7);
+}
+
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: -0.01em;
+}
+
+*,
+*::before,
+*::after {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gradient-text {
+    background: var(--gradient-text-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text-accent {
+    background: var(--gradient-text-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text-purple {
+    background: var(--gradient-text-purple);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-text-ocean {
+    background: var(--gradient-text-ocean);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@keyframes blob {
+    0% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+        transform: translate(40px, -60px) scale(1.15);
+    }
+
+    66% {
+        transform: translate(-30px, 30px) scale(0.85);
+    }
+
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.animate-blob {
+    animation: blob 8s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+}
+
+.animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 4s ease infinite;
+}
+
+.animate-shimmer {
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+::selection {
+    background-color: var(--brand-cyan);
+    color: var(--text-inverse);
+}
+
+::-moz-selection {
+    background-color: var(--brand-cyan);
+    color: var(--text-inverse);
+}
+
+*:focus-visible {
+    outline: 2px solid var(--brand-cyan);
+    outline-offset: 2px;
+}
+
+.focus-ring {
+    transition: box-shadow 0.2s ease;
+}
+
+.focus-ring:focus {
+    box-shadow: 0 0 0 3px var(--brand-cyan),
+        0 0 0 5px rgba(20, 184, 166, 0.2);
+}
