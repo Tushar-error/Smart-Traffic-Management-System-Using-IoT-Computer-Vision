@@ -104,7 +104,6 @@ The **Smart Traffic Management System** is an advanced web-based application des
 - Time-series forecasting models
 
 **IoT**
-- MQTT Protocol
 - Raspberry Pi / Edge devices
 - IP Cameras / Sensors
 
