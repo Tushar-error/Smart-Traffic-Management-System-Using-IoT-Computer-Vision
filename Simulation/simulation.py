@@ -1,4 +1,3 @@
-# LAG
 # NO. OF VEHICLES IN SIGNAL CLASS
 # stops not used
 # DISTRIBUTION
