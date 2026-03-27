@@ -4,10 +4,19 @@ CAMERA_INDEX = 0
 FRAME_WIDTH = 640
 FRAME_HEIGHT = 480
 
-LANE_BOUNDARIES = {
-    1: (0, 213),
-    2: (213, 426),
-    3: (426, 640)
+# Direction indices
+NORTH = 1
+EAST = 2
+SOUTH = 3
+WEST = 4
+
+# Region boundaries for a 2x2 grid split of the 640x480 frame
+# Format: (x_start, x_end, y_start, y_end)
+DIRECTION_REGIONS = {
+    NORTH: (0, 320, 0, 240),    # Top-Left
+    EAST: (320, 640, 0, 240),   # Top-Right
+    SOUTH: (0, 320, 240, 480),  # Bottom-Left
+    WEST: (320, 640, 240, 480), # Bottom-Right
 }
 
 YOLO_MODEL = "yolov8n.pt"

@@ -59,8 +59,10 @@ def run_detection():
 
             last_decision_time = now
 
-            print(f"\n[TRAFFIC] Lane {current_green_lane} GREEN | "
-                  f"Counts: L1={smooth_counts[1]} L2={smooth_counts[2]} L3={smooth_counts[3]}")
+            direction_names = {1: "NORTH", 2: "EAST", 3: "SOUTH", 4: "WEST"}
+            name = direction_names.get(current_green_lane, f"L{current_green_lane}")
+            print(f"\n[TRAFFIC] {name} GREEN | "
+                  f"Counts: N={smooth_counts[1]} E={smooth_counts[2]} S={smooth_counts[3]} W={smooth_counts[4]}")
 
         cv2.imshow("Smart Traffic System", annotated)
         if cv2.waitKey(1) == 27:

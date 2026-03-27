@@ -49,9 +49,10 @@ export const Dashboard = () => {
   }
 
   const lanes = [
-    { lane: 1, data: status.lane1 },
-    { lane: 2, data: status.lane2 },
-    { lane: 3, data: status.lane3 },
+    { lane: 1, name: "NORTH", data: status.lane1 },
+    { lane: 2, name: "EAST", data: status.lane2 },
+    { lane: 3, name: "SOUTH", data: status.lane3 },
+    { lane: 4, name: "WEST", data: status.lane4 },
   ];
 
   return (
@@ -63,11 +64,12 @@ export const Dashboard = () => {
         totalVehicles={status.total_vehicles}
       />
 
-      <div ref={cardsRef} className="grid grid-cols-3 gap-6 px-8 mb-8">
-        {lanes.map(({ lane, data }) => (
+      <div ref={cardsRef} className="grid grid-cols-2 gap-6 px-8 mb-8">
+        {lanes.map(({ lane, name, data }) => (
           <LaneCard
             key={lane}
             lane={lane}
+            name={name}
             data={data}
             isGreen={status.green_lane === lane}
           />
@@ -82,15 +84,15 @@ export const Dashboard = () => {
           <div className="font-bebas text-2xl tracking-widest text-white mb-4">
             MANUAL OVERRIDE
           </div>
-          <div className="flex gap-4">
-            {[1, 2, 3].map((lane) => (
+          <div className="grid grid-cols-2 gap-4">
+            {lanes.map(({ lane, name }) => (
               <MagneticButton
                 key={lane}
                 onClick={() => handleOverride(lane)}
-                className="flex-1 py-3 rounded-xl font-bebas text-xl tracking-widest border transition-all duration-300 hover:bg-green hover:text-bg hover:border-green"
+                className="py-3 rounded-xl font-bebas text-xl tracking-widest border transition-all duration-300 hover:bg-green hover:text-bg hover:border-green"
                 style={{ borderColor: "#333", color: "#E8E8E8", background: "transparent" } as any}
               >
-                LANE {lane} GREEN
+                {name} GREEN
               </MagneticButton>
             ))}
           </div>

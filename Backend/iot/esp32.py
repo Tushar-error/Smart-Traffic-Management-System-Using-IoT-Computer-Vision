@@ -29,7 +29,9 @@ class ESP32Controller:
         command = str(green_lane)
         self._send(command)
         self.current_lane = green_lane
-        print(f"[ESP32] Lane {green_lane} → GREEN")
+        direction_names = {1: "NORTH", 2: "EAST", 3: "SOUTH", 4: "WEST"}
+        name = direction_names.get(green_lane, f"Lane {green_lane}")
+        print(f"[ESP32] {name} → GREEN")
 
     def _send(self, cmd: str):
         if self.connected:

@@ -5,11 +5,11 @@ from traffic.database import get_recent_logs
 api = Blueprint("api", __name__)
 
 state = {
-    "counts": {1: 0, 2: 0, 3: 0},
-    "signals": {1: "RED", 2: "RED", 3: "RED"},
-    "congestion": {1: "CLEAR", 2: "CLEAR", 3: "CLEAR"},
+    "counts": {1: 0, 2: 0, 3: 0, 4: 0},
+    "signals": {1: "RED", 2: "RED", 3: "RED", 4: "RED"},
+    "congestion": {1: "CLEAR", 2: "CLEAR", 3: "CLEAR", 4: "CLEAR"},
     "green_lane": None,
-    "durations": {1: 0, 2: 0, 3: 0},
+    "durations": {1: 0, 2: 0, 3: 0, 4: 0},
     "total_vehicles": 0,
     "esp32_status": "simulation",
     "system_running": False
@@ -49,6 +49,12 @@ def status():
             "duration": state["durations"].get(3, 0),
             "congestion": state["congestion"].get(3, "CLEAR")
         },
+        "lane4": {
+            "count": state["counts"].get(4, 0),
+            "signal": state["signals"].get(4, "RED"),
+            "duration": state["durations"].get(4, 0),
+            "congestion": state["congestion"].get(4, "CLEAR")
+        },
         "green_lane": state["green_lane"],
         "total_vehicles": state["total_vehicles"],
         "esp32_status": state["esp32_status"],
@@ -66,11 +72,11 @@ def history():
 def override():
     data = request.get_json()
     lane = data.get("lane")
-    if lane not in [1, 2, 3]:
+    if lane not in [1, 2, 3, 4]:
         return jsonify({"error": "Invalid lane"}), 400
 
     state["green_lane"] = lane
-    state["signals"] = {1: "RED", 2: "RED", 3: "RED"}
+    state["signals"] = {1: "RED", 2: "RED", 3: "RED", 4: "RED"}
     state["signals"][lane] = "GREEN"
 
     return jsonify({"message": f"Lane {lane} manually set to GREEN"})

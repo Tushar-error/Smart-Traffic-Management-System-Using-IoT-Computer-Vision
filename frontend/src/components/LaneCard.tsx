@@ -5,6 +5,7 @@ import { SignalLight } from "./SignalLight";
 
 interface Props {
   lane: number;
+  name?: string;
   data: LaneData;
   isGreen: boolean;
 }
@@ -16,7 +17,7 @@ const congestionColor = {
   HIGH: "#FF3F00",
 };
 
-export const LaneCard = ({ lane, data, isGreen }: Props) => {
+export const LaneCard = ({ lane, name, data, isGreen }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const countRef = useRef<HTMLDivElement>(null);
   const prevCount = useRef(data.count);
@@ -59,7 +60,7 @@ export const LaneCard = ({ lane, data, isGreen }: Props) => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <div className="font-bebas text-4xl text-white tracking-wider">
-            LANE {lane}
+            {name || `LANE ${lane}`}
           </div>
           <div
             className="font-mono text-xs tracking-widest uppercase mt-1"

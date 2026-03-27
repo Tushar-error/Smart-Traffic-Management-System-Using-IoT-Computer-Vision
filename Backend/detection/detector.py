@@ -4,9 +4,7 @@ from ultralytics import YOLO
 YOLO_MODEL = "yolov8n.pt"
 VEHICLE_CLASSES = [2, 3, 5, 7]
 CONFIDENCE_THRESHOLD = 0.4
-FRAME_WIDTH = 640
-FRAME_HEIGHT = 480
-LANE_BOUNDARIES = {1: (0, 213), 2: (213, 426), 3: (426, 640)}
+from config import DIRECTION_REGIONS, FRAME_WIDTH, FRAME_HEIGHT, NORTH, EAST, SOUTH, WEST
 
 class VehicleDetector:
     def __init__(self):
@@ -16,7 +14,7 @@ class VehicleDetector:
 
     def detect(self, frame):
         frame = cv2.resize(frame, (FRAME_WIDTH, FRAME_HEIGHT))
-        lane_counts = {1: 0, 2: 0, 3: 0}
+        direction_counts = {NORTH: 0, EAST: 0, SOUTH: 0, WEST: 0}
         detections = []
 
         results = self.model(frame, verbose=False, conf=CONFIDENCE_THRESHOLD)
@@ -30,39 +28,53 @@ class VehicleDetector:
                 conf = float(box.conf[0])
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
                 cx = (x1 + x2) // 2
-                lane = self._get_lane(cx)
-                lane_counts[lane] += 1
+                cy = (y1 + y2) // 2
+                direction = self._get_direction(cx, cy)
+                direction_counts[direction] += 1
 
                 detections.append({
                     "bbox": [x1, y1, x2, y2],
-                    "lane": lane,
+                    "direction": direction,
                     "confidence": round(conf, 2),
                     "class": cls
                 })
 
-                color = self._lane_color(lane)
+                color = self._direction_color(direction)
                 cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-                cv2.putText(frame, f"L{lane} {conf:.0%}", (x1, y1 - 5),
+                dir_label = {NORTH: "N", EAST: "E", SOUTH: "S", WEST: "W"}[direction]
+                cv2.putText(frame, f"{dir_label} {conf:.0%}", (x1, y1 - 5),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 1)
 
-        self._draw_overlay(frame, lane_counts)
-        return frame, lane_counts, detections
+        self._draw_overlay(frame, direction_counts)
+        return frame, direction_counts, detections
 
-    def _get_lane(self, cx):
-        for lane, (start, end) in LANE_BOUNDARIES.items():
-            if start <= cx < end:
-                return lane
-        return 3
+    def _get_direction(self, cx, cy):
+        for direction, (x1, x2, y1, y2) in DIRECTION_REGIONS.items():
+            if x1 <= cx < x2 and y1 <= cy < y2:
+                return direction
+        return NORTH
 
-    def _lane_color(self, lane):
-        colors = {1: (0, 120, 255), 2: (0, 255, 120), 3: (255, 120, 0)}
-        return colors.get(lane, (255, 255, 255))
+    def _direction_color(self, direction):
+        colors = {
+            NORTH: (0, 120, 255),  # Blue
+            EAST: (0, 255, 120),   # Green
+            SOUTH: (255, 120, 0),  # Orange
+            WEST: (255, 0, 255)    # Purple
+        }
+        return colors.get(direction, (255, 255, 255))
 
-    def _draw_overlay(self, frame, lane_counts):
-        for lane, (_, end) in LANE_BOUNDARIES.items():
-            if lane < 3:
-                cv2.line(frame, (end, 0), (end, FRAME_HEIGHT), (255, 255, 255), 1)
-        positions = {1: 10, 2: 223, 3: 436}
-        for lane, x in positions.items():
-            cv2.putText(frame, f"Lane {lane}: {lane_counts[lane]}",
-                        (x, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+    def _draw_overlay(self, frame, direction_counts):
+        # Draw grid lines
+        cv2.line(frame, (320, 0), (320, 480), (255, 255, 255), 1) # Vertical
+        cv2.line(frame, (0, 240), (640, 240), (255, 255, 255), 1) # Horizontal
+
+        labels = {
+            NORTH: ("NORTH", 10, 25),
+            EAST: ("EAST", 330, 25),
+            SOUTH: ("SOUTH", 10, 265),
+            WEST: ("WEST", 330, 265)
+        }
+        for direction, (name, x, y) in labels.items():
+            count = direction_counts[direction]
+            cv2.putText(frame, f"{name}: {count}",
+                        (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)

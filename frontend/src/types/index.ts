@@ -9,6 +9,7 @@ export type TrafficStatus = {
   lane1: LaneData;
   lane2: LaneData;
   lane3: LaneData;
+  lane4: LaneData;
   green_lane: number | string;
   total_vehicles: number;
   esp32_status: "connected" | "simulation";
@@ -20,6 +21,7 @@ export type HistoryPoint = {
   lane1: number;
   lane2: number;
   lane3: number;
+  lane4: number;
   green_lane: number;
   total: number;
 };

@@ -1,17 +1,19 @@
 class LaneTracker:
     def __init__(self, window=5):
         self.window = window
-        self.history = {1: [], 2: [], 3: []}
+        self.history = {}
 
     def update(self, raw_counts: dict) -> dict:
-        for lane in [1, 2, 3]:
-            self.history[lane].append(raw_counts.get(lane, 0))
+        for lane, count in raw_counts.items():
+            if lane not in self.history:
+                self.history[lane] = []
+            self.history[lane].append(count)
             if len(self.history[lane]) > self.window:
                 self.history[lane].pop(0)
 
         return {
-            lane: round(sum(self.history[lane]) / len(self.history[lane]))
-            for lane in [1, 2, 3]
+            lane: round(sum(counts) / len(counts))
+            for lane, counts in self.history.items()
         }
 
     def get_congestion_level(self, count: int) -> str:
