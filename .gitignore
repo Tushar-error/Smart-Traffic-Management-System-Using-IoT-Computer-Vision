@@ -1,0 +1,33 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn
+
+# React/Vite
+dist/
+dist-ssr/
+*.local
+.pnp.*
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+env/
+.env
+
+# Large Files
+*.pt
+*.bin
+*.weights
+
+# Local Settings
+.DS_Store
+Thumbs.db
