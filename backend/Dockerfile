@@ -18,8 +18,8 @@ WORKDIR /app
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt \
-    && pip uninstall -y opencv-python \
-    && pip install --no-cache-dir opencv-python-headless
+    && pip uninstall -y opencv-python opencv-python-headless \
+    && pip install --no-cache-dir --force-reinstall opencv-python-headless
 
 # Copy the rest of the backend application
 COPY . .
