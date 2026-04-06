@@ -71,7 +71,7 @@ const LiveFeed: React.FC = () => {
                 </svg>
               </div>
             </div>
-            <div lassName="p-4">
+            <div className="p-4">
               <h3
                 className="font-semibold mb-2"
                 style={{ color: 'var(--text-primary)' }}
