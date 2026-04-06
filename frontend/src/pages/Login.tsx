@@ -34,12 +34,12 @@ export const Login = () => {
     if (ok) {
       gsap.to(formRef.current, {
         scale: 0.95, opacity: 0, duration: 0.3,
-        onComplete: () => navigate("/dashboard")
+        onComplete: () => { navigate("/dashboard"); }
       });
     } else {
       setError("Invalid credentials");
       gsap.to(formRef.current, {
-        x: [-10, 10, -10, 10, 0],
+        x: [-10, 10, -10, 10, 0] as any,
         duration: 0.4,
         ease: "power2.inOut"
       });

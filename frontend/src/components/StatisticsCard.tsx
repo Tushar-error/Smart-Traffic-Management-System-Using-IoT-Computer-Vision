@@ -10,7 +10,6 @@ interface StatisticsCardProps {
 const StatisticsCard: React.FC<StatisticsCardProps> = ({ title, value, change, icon }) => {
   const isPositive = change.startsWith('+');
   const isNegative = change.startsWith('-');
-  const isStable = change === 'stable';
 
   const getIcon = () => {
     switch (icon) {
