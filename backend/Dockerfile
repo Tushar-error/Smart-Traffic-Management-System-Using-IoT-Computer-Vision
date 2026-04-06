@@ -5,6 +5,13 @@ FROM python:3.10-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# Install required system dependencies for OpenCV on Debian 12 Slim
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libgl1 \
+    libxcb1 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set work directory
 WORKDIR /app
 
